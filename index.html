@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#000}
+.gl-root{font-family:Inter,sans-serif;color:#fff;background:#000;width:100%;overflow-x:hidden;position:relative}
+.gl-root img{display:block}
+[data-track]::-webkit-scrollbar{display:none}
+.gl-anchor{scroll-margin-top:80px}
+
+@keyframes glowpulse{0%,100%{box-shadow:0 6px 22px rgba(245,196,24,.35)}50%{box-shadow:0 6px 30px rgba(245,196,24,.6)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}18%{transform:rotate(-16deg)}38%{transform:rotate(12deg)}58%{transform:rotate(-9deg)}78%{transform:rotate(5deg)}}
+
+/* NAV */
+.gl-nav{position:sticky;top:0;z-index:60;background:rgba(5,5,5,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+.gl-nav-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 20px}
+.gl-logo{font-family:Outfit,sans-serif;font-weight:900;font-size:16px;letter-spacing:1.5px;color:#fff;white-space:nowrap}
+.gl-logo span{color:#f5c418}
+.gl-links{display:none;align-items:center;gap:30px}
+.gl-links a{font-family:Outfit,sans-serif;font-weight:600;font-size:14px;color:rgba(225,228,235,.72);transition:color .2s}
+.gl-links a:hover{color:#f5c418}
+.gl-nav-right{display:flex;align-items:center;gap:12px}
+.gl-usdot{display:none;font-family:Outfit,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,.7);border:1px solid rgba(245,196,24,.3);border-radius:100px;padding:6px 11px;white-space:nowrap}
+.gl-navcta{display:inline-flex;align-items:center;gap:7px;background:#f5c418;color:#000;font-family:Outfit,sans-serif;font-weight:800;font-size:13px;padding:10px 16px;border-radius:100px;white-space:nowrap;transition:transform .2s}
+.gl-navcta:hover{transform:scale(1.04)}
+
+/* HERO */
+.gl-hero{position:relative;background:#050505;display:flex;flex-direction:column}
+.gl-hmedia{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000}
+.gl-hmedia video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gl-hgrad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,5,.45) 0%,rgba(5,5,5,0) 30%,rgba(5,5,5,0) 55%,rgba(5,5,5,.94) 100%)}
+.gl-hwrap{position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto}
+.gl-hcontent{padding:24px 20px 34px;display:flex;flex-direction:column;gap:17px}
+.gl-eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:Outfit,sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;color:#f5c418;text-transform:uppercase}
+.gl-eyebrow i{width:24px;height:1px;background:#f5c418;display:inline-block}
+.gl-h1{font-family:Outfit,sans-serif;font-weight:900;font-size:clamp(38px,8.5vw,74px);line-height:1.01;letter-spacing:-1.5px;color:#fff;text-wrap:balance;max-width:15ch}
+.gl-h1 span{color:#f5c418}
+.gl-lead{font-size:clamp(14px,1.5vw,18px);line-height:1.6;color:rgba(225,228,235,.82);max-width:540px}
+.gl-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:#f5c418;color:#000;font-family:Outfit,sans-serif;font-weight:800;font-size:15px;padding:16px 28px;border-radius:100px;width:100%;max-width:320px;transition:transform .2s,box-shadow .2s}
+.gl-cta.glow{animation:glowpulse 3.5s ease-in-out infinite}
+.gl-cta:hover{transform:scale(1.02)}
+.gl-chips{display:flex;flex-wrap:wrap;gap:8px}
+.gl-chip{font-size:11px;font-weight:600;letter-spacing:.5px;color:rgba(225,228,235,.78);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:7px 13px}
+
+/* SECTIONS */
+.gl-sec{max-width:1240px;margin:0 auto;padding:58px 20px}
+.gl-h2{font-family:Outfit,sans-serif;font-weight:900;font-size:clamp(28px,4vw,46px);line-height:1.05;letter-spacing:-.5px;color:#fff}
+.gl-h2 span{color:#f5c418}
+.gl-sub{font-size:clamp(13px,1.4vw,16px);line-height:1.6;color:#8a8a8a;max-width:460px}
+
+/* PROCESO */
+.gl-band{background:#000}
+.gl-proc-head{display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;margin-bottom:26px}
+.gl-carousel{position:relative;max-width:1040px;margin:0 auto}
+.gl-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:16px;border:1px solid rgba(245,196,24,.14)}
+.gl-slide{flex:0 0 100%;scroll-snap-align:center;position:relative;line-height:0}
+.gl-slide img{width:100%;height:100%;object-fit:cover}
+.gl-counter{position:absolute;top:11px;right:11px;font-family:Outfit,sans-serif;font-size:10px;font-weight:700;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:4px 11px;color:rgba(255,255,255,.85);letter-spacing:.5px}
+.gl-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
+
+/* SERVICIOS */
+.gl-band2{background:#060606}
+.gl-sec-head{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.gl-srv-grid{display:grid;grid-template-columns:1fr;gap:10px}
+.gl-srv{background:#0d0d0d;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:22px 20px;transition:transform .3s ease,border-color .3s ease}
+.gl-srv:hover{border-color:rgba(245,196,24,.4);transform:translateY(-3px)}
+.gl-ico{font-size:24px;margin-bottom:12px;display:inline-block;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.gl-srv:hover .gl-ico{transform:rotate(360deg) scale(1.18)}
+.gl-srv h3{font-family:Outfit,sans-serif;font-weight:700;font-size:17px;color:#fff;margin-bottom:6px}
+.gl-srv p{font-size:13px;color:#8a8a8a;line-height:1.6}
+.gl-tag{display:inline-block;margin-top:13px;font-family:Outfit,sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;color:#f5c418;text-transform:uppercase;border-bottom:1px solid rgba(245,196,24,.3);padding-bottom:2px}
+
+/* SLOGAN */
+.gl-slogan{background:linear-gradient(150deg,#100d02 0%,#0a0a0a 60%);border:1px solid rgba(245,196,24,.18);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1fr;align-items:stretch}
+.gl-slogan-text{padding:clamp(28px,4vw,52px);display:flex;flex-direction:column;gap:16px}
+.gl-slogan-media{position:relative;min-height:260px;background:#000;border-top:1px solid rgba(245,196,24,.14)}
+.gl-slogan-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gl-slogan-media .gl-smedia-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.55),transparent 40%)}
+.gl-quote{font-family:Outfit,sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,40px);line-height:1.18;letter-spacing:-.5px;color:#fff;text-wrap:balance;max-width:18ch}
+.gl-quote span{color:#f5c418}
+.gl-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(245,196,24,.14);border:1px solid rgba(245,196,24,.16);border-radius:14px;overflow:hidden;margin-top:6px;max-width:520px}
+.gl-stat{background:#0a0a0a;padding:20px 8px;text-align:center}
+.gl-stat-n{font-family:Outfit,sans-serif;font-weight:900;font-size:clamp(26px,3.2vw,38px);color:#f5c418;line-height:1;letter-spacing:-1px}
+.gl-stat-l{font-size:9px;font-weight:600;color:#8a8a8a;letter-spacing:1.5px;text-transform:uppercase;margin-top:6px}
+
+/* COBERTURA */
+.gl-cov-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gl-cov{border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px 16px;transition:border-color .3s,background .3s}
+.gl-cov:hover{border-color:rgba(245,196,24,.32);background:rgba(245,196,24,.03)}
+.gl-cov-ico{font-size:24px;margin-bottom:9px;display:inline-block;transform-origin:70% 70%}
+.gl-wiggle{animation:wiggle 1.9s ease-in-out infinite}
+.gl-cov h4{font-family:Outfit,sans-serif;font-weight:700;font-size:14px;color:#fff;margin-bottom:4px}
+.gl-cov p{font-size:11.5px;color:#8a8a8a;line-height:1.5}
+
+/* CTA FINAL */
+.gl-ctabox{background:radial-gradient(120% 120% at 50% 0%,#16130420 0%,#0a0a0a 55%);border:1px solid rgba(245,196,24,.18);border-radius:24px;padding:clamp(34px,5vw,72px) clamp(22px,4vw,56px);text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+.gl-ctabox h2{font-family:Outfit,sans-serif;font-weight:900;font-size:clamp(28px,4.2vw,48px);line-height:1.08;letter-spacing:-.5px;color:#fff;text-wrap:balance}
+.gl-ctabox>p{font-size:14px;color:#9a9a9a;line-height:1.6;max-width:340px}
+.gl-ctabtns{display:flex;flex-direction:column;gap:11px;align-items:center;width:100%}
+.gl-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:300px;border:1px solid rgba(255,255,255,.14);color:#fff;font-family:Outfit,sans-serif;font-weight:600;font-size:14px;padding:14px 26px;border-radius:100px;transition:border-color .2s}
+.gl-btn-ghost:hover{border-color:rgba(245,196,24,.5)}
+.gl-contact{display:flex;flex-direction:column;gap:12px;width:100%;padding-top:22px;margin-top:6px;border-top:1px solid rgba(255,255,255,.07)}
+.gl-contact label{font-family:Outfit,sans-serif;font-size:9px;font-weight:700;letter-spacing:2.5px;color:#f5c418;text-transform:uppercase;display:block;margin-bottom:3px}
+.gl-contact span{font-size:13px;color:rgba(220,224,232,.9)}
+.gl-usdotbar{font-size:9px;font-weight:500;letter-spacing:1.5px;color:rgba(245,196,24,.6);text-transform:uppercase;line-height:1.8;margin-top:6px}
+
+/* FOOTER */
+.gl-foot{background:#000;border-top:1px solid rgba(255,255,255,.06);padding:26px 20px 34px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center}
+.gl-flogo{font-family:Outfit,sans-serif;font-weight:900;font-size:14px;letter-spacing:1.5px;color:#fff}
+.gl-flogo span{color:#f5c418}
+.gl-fnote{font-size:10px;color:rgba(136,136,136,.45);letter-spacing:.5px}
+
+/* STICKY (mobile) */
+.gl-sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.85) 28%,#000 100%)}
+.gl-sticky a{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;max-width:440px;margin:0 auto;background:#f5c418;color:#000;font-family:Outfit,sans-serif;font-weight:800;font-size:15px;padding:15px 24px;border-radius:100px;box-shadow:0 8px 28px rgba(245,196,24,.4)}
+.gl-pad{padding-bottom:80px}
+.gl-dot-live{width:8px;height:8px;border-radius:50%;background:#0a7d2c;box-shadow:0 0 0 3px rgba(10,125,44,.3)}
+
+/* ── DESKTOP ── */
+@media(min-width:880px){
+  .gl-links{display:flex}
+  .gl-usdot{display:inline-block}
+  .gl-hcontent{padding:40px 40px 52px;gap:20px}
+  .gl-cta{width:auto}
+  .gl-sec{padding:92px 40px}
+  .gl-proc-head{align-items:flex-start;text-align:left}
+  .gl-srv-grid{grid-template-columns:repeat(3,1fr);gap:12px}
+  .gl-cov-grid{grid-template-columns:repeat(4,1fr);gap:12px}
+  .gl-slogan{grid-template-columns:1.05fr .95fr}
+  .gl-slogan-media{min-height:100%;border-top:none;border-left:1px solid rgba(245,196,24,.14)}
+  .gl-slogan-media .gl-smedia-grad{background:linear-gradient(90deg,rgba(10,10,10,.7),transparent 38%)}
+  .gl-ctabtns{flex-direction:row;justify-content:center}
+  .gl-ctabtns .gl-cta,.gl-ctabtns .gl-btn-ghost{width:auto}
+  .gl-contact{flex-direction:row;justify-content:center;gap:48px}
+  .gl-sticky{display:none}
+  .gl-pad{padding-bottom:0}
+}
+@media(min-width:1240px){
+  .gl-sec{padding:104px 0}
+  .gl-hcontent{padding:48px 0 60px}
+}
+</style>
+</helmet>
+
+<div class="gl-root">
+
+  <!-- ════ NAV ════ -->
+  <nav class="gl-nav">
+    <div class="gl-nav-in">
+      <a href="#top" class="gl-logo">WM <span>GLOBALTY</span></a>
+      <div class="gl-links">
+        <a href="#proceso">Proceso</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#cobertura">Cobertura</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="gl-nav-right">
+        <span class="gl-usdot">USDOT 3887780</span>
+        <a href="{{ whatsappUrl }}" target="_blank" class="gl-navcta"><span class="gl-dot-live"></span>WhatsApp</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section id="top" class="gl-hero">
+    <div class="gl-hmedia">
+      <video ref="{{ videoRef }}" src="assets/header.mp4" loop muted playsinline autoplay></video>
+      <div class="gl-hgrad"></div>
+    </div>
+    <div class="gl-hwrap">
+      <div class="gl-hcontent">
+        <div class="gl-eyebrow"><i></i>Transporte terrestre · EE.UU.</div>
+        <h1 class="gl-h1">Movemos lo que tu negocio <span>necesita.</span></h1>
+        <p class="gl-lead">Flota propia desde Princeton, Texas. Carga general, hotshot y maquinaria pesada — con trato directo y seguimiento en vivo.</p>
+        <a href="{{ whatsappUrl }}" target="_blank" class="gl-cta glow">Cotizar por WhatsApp →</a>
+        <div class="gl-chips">
+          <span class="gl-chip">Flota propia</span>
+          <span class="gl-chip">Trato directo</span>
+          <span class="gl-chip">Seguimiento en vivo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ PROCESO ════ -->
+  <div class="gl-band">
+    <section id="proceso" class="gl-sec gl-anchor">
+      <div class="gl-proc-head">
+        <div class="gl-eyebrow">Cómo trabajamos</div>
+        <h2 class="gl-h2">Del origen al destino</h2>
+        <p class="gl-sub">Cada carga sigue un proceso riguroso: preparamos, aseguramos y entregamos con precisión.</p>
+      </div>
+      <div class="gl-carousel">
+        <div data-track ref="{{ trackRef }}" class="gl-track">
+          <sc-for list="{{ steps }}" as="s">
+            <div class="gl-slide">
+              <img data-src="{{ s.img }}" alt="{{ s.alt }}"/>
+            </div>
+          </sc-for>
+        </div>
+        <div class="gl-counter">{{ counter }}</div>
+      </div>
+      <div class="gl-dots">
+        <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="7">
+          <button onClick="{{ dot.onClick }}" style="{{ dot.style }}" aria-label="Paso"></button>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════ SERVICIOS ════ -->
+  <div class="gl-band2">
+    <section id="servicios" class="gl-sec gl-anchor">
+      <div class="gl-sec-head">
+        <div class="gl-eyebrow"><i></i>Lo que hacemos</div>
+        <h2 class="gl-h2">Servicios logísticos</h2>
+      </div>
+      <div class="gl-srv-grid">
+        <sc-for list="{{ services }}" as="srv" hint-placeholder-count="6">
+          <div class="gl-srv">
+            <div class="gl-ico">{{ srv.icon }}</div>
+            <h3>{{ srv.title }}</h3>
+            <p>{{ srv.desc }}</p>
+            <span class="gl-tag">{{ srv.tag }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════ SLOGAN ════ -->
+  <div class="gl-band">
+    <section class="gl-sec">
+      <div class="gl-slogan">
+        <div class="gl-slogan-text">
+          <div class="gl-eyebrow">Nuestra filosofía</div>
+          <p class="gl-quote">"El camino no será fácil, sino <span>menos difícil</span>."</p>
+          <p class="gl-sub" style="max-width:620px;color:#9a9a9a;">Los problemas logísticos existen. Nuestro trabajo es que nunca los sientas — con respuesta rápida, soluciones reales y carga que llega como salió.</p>
+          <div class="gl-stats">
+            <sc-for list="{{ stats }}" as="st" hint-placeholder-count="3">
+              <div class="gl-stat">
+                <div class="gl-stat-n">{{ st.num }}</div>
+                <div class="gl-stat-l">{{ st.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div class="gl-slogan-media">
+          <video ref="{{ sloganVideoRef }}" src="assets/slogan.mp4" loop muted playsinline autoplay></video>
+          <div class="gl-smedia-grad"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════ COBERTURA ════ -->
+  <div class="gl-band">
+    <section id="cobertura" class="gl-sec gl-anchor">
+      <div class="gl-sec-head">
+        <h2 class="gl-h2">Tu Carga segura&nbsp;&nbsp;<span>con nosotros</span></h2>
+      </div>
+      <div class="gl-cov-grid">
+        <sc-for list="{{ coverage }}" as="c" hint-placeholder-count="4">
+          <div class="gl-cov">
+            <div class="gl-cov-ico {{ c.animClass }}">{{ c.flag }}</div>
+            <h4>{{ c.name }}</h4>
+            <p>{{ c.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════ CTA FINAL ════ -->
+  <div class="gl-band">
+    <section id="contacto" class="gl-sec gl-anchor">
+      <div class="gl-ctabox">
+        <h2>¿Lista tu carga para moverse?</h2>
+        <p>Cuéntanos qué necesitas. Te respondemos con una cotización clara, sin vueltas.</p>
+        <div class="gl-ctabtns">
+          <a href="{{ whatsappUrl }}" target="_blank" class="gl-cta">WhatsApp directo →</a>
+          <a href="{{ emailHref }}" class="gl-btn-ghost">Enviar email</a>
+        </div>
+        <div class="gl-contact">
+          <div><label>Email</label><span>{{ email }}</span></div>
+          <div><label>Ubicación</label><span>Princeton, Texas 75407, USA</span></div>
+        </div>
+        <div class="gl-usdotbar">USDOT 3887780 · MC 1429680 · Activa desde Jun. 2022</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="gl-foot gl-pad">
+    <div class="gl-flogo">WM <span>GLOBALTY</span> LOGISTIC</div>
+    <div class="gl-fnote">© 2026 · WM Globalty Logistic LLC</div>
+  </footer>
+
+  <!-- ════ STICKY CTA (móvil) ════ -->
+  <div class="gl-sticky">
+    <a href="{{ whatsappUrl }}" target="_blank"><span class="gl-dot-live"></span>Cotizar ahora por WhatsApp</a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:820},&quot;whatsappUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://wa.me/1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;wmglobalylogistic@gmail.com&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoplayProcess&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.trackRef = React.createRef();
+    this.videoRef = React.createRef();
+    this.sloganVideoRef = React.createRef();
+    this.state = { active: 0 };
+  }
+
+  steps(){
+    return [
+      { img:'assets/step1.png', alt:'Preparación de la carga' },
+      { img:'assets/step2.png', alt:'Aseguramiento de la carga' },
+      { img:'assets/step3.png', alt:'Listo para rodar' },
+      { img:'assets/step5.png', alt:'En marcha' },
+      { img:'assets/step6.png', alt:'Rumbo al destino' },
+      { img:'assets/step7.png', alt:'Nuestra ruta' },
+      { img:'assets/step8.png', alt:'Entrega exitosa' },
+    ];
+  }
+
+  hydrateImgs(){
+    const t = this.trackRef.current;
+    if(!t) return;
+    t.querySelectorAll('img[data-src]').forEach(img => {
+      if(img.getAttribute('src') !== img.dataset.src) img.setAttribute('src', img.dataset.src);
+    });
+  }
+
+  componentDidUpdate(){ this.hydrateImgs(); }
+
+  componentDidMount(){
+    this.hydrateImgs();
+    [this.videoRef.current, this.sloganVideoRef.current].forEach(v => {
+      if(!v) return;
+      v.muted = true; v.loop = true;
+      v.addEventListener('ended', () => { v.currentTime = 0; v.play().catch(()=>{}); });
+      const p = v.play(); if(p&&p.catch) p.catch(()=>{});
+    });
+    const t = this.trackRef.current;
+    if(t){
+      this._onScroll = () => {
+        const i = Math.round(t.scrollLeft / t.clientWidth);
+        if(i !== this.state.active) this.setState({ active: i });
+      };
+      t.addEventListener('scroll', this._onScroll, { passive:true });
+    }
+    this.startAuto();
+  }
+
+  componentWillUnmount(){
+    clearInterval(this._timer);
+    const t = this.trackRef.current;
+    if(t && this._onScroll) t.removeEventListener('scroll', this._onScroll);
+  }
+
+  startAuto(){
+    clearInterval(this._timer);
+    if(this.props.autoplayProcess === false) return;
+    this._timer = setInterval(() => {
+      const t = this.trackRef.current;
+      if(!t) return;
+      const n = (this.state.active + 1) % this.steps().length;
+      t.scrollTo({ left: n * t.clientWidth, behavior:'smooth' });
+    }, 4500);
+  }
+
+  goToStep(i){
+    const t = this.trackRef.current;
+    if(t) t.scrollTo({ left: i * t.clientWidth, behavior:'smooth' });
+    this.startAuto();
+  }
+
+  renderVals(){
+    const steps = this.steps();
+    const active = this.state.active;
+    const dots = steps.map((s,i) => ({
+      style: `width:${i===active?'22px':'7px'};height:7px;border-radius:100px;background:${i===active?'#f5c418':'rgba(255,255,255,.2)'};border:none;padding:0;cursor:pointer;transition:all .3s;`,
+      onClick: () => this.goToStep(i),
+    }));
+    const email = this.props.email ?? 'wmglobalylogistic@gmail.com';
+    return {
+      steps, dots,
+      counter: `${String(active+1).padStart(2,'0')} / ${String(steps.length).padStart(2,'0')}`,
+      videoRef: this.videoRef,
+      sloganVideoRef: this.sloganVideoRef,
+      trackRef: this.trackRef,
+      whatsappUrl: this.props.whatsappUrl ?? 'https://wa.me/1',
+      email,
+      emailHref: `mailto:${email}`,
+      services: [
+        { icon:'🚛', title:'Transporte terrestre', desc:'Flota propia en rutas nacionales desde Princeton, Texas. Carga general y materiales industriales.', tag:'General Freight' },
+        { icon:'⚡', title:'Hotshot delivery', desc:'Entregas urgentes de carga pequeña a mediana. Velocidad cuando los tiempos no admiten errores.', tag:'Time-Critical' },
+        { icon:'⚙️', title:'Maquinaria pesada', desc:'Equipos de construcción, bobinas eléctricas y cargas de gran envergadura que otros no aceptan.', tag:'Heavy Equipment' },
+        { icon:'🎧', title:'Dispatch services', desc:'Asesoría para transportistas independientes. Encontramos las cargas y negociamos tarifas por vos.', tag:'Owner Operators' },
+        { icon:'🌍', title:'Logística internacional', desc:'Coordinación de importaciones y exportaciones con soporte en documentación aduanal.', tag:'Import / Export' },
+        { icon:'📡', title:'Seguimiento en vivo', desc:'Comunicación directa durante todo el tránsito. Updates constantes vía WhatsApp.', tag:'Live Updates' },
+      ],
+      stats: [
+        { num:'50+', label:'Rutas' },
+        { num:'11', label:'Estados' },
+        { num:'1000+', label:'Envíos' },
+      ],
+      coverage: [
+        { flag:'🇺🇸', name:'Estados Unidos', desc:'Base en Texas. 11 estados cubiertos.', animClass:'' },
+        { flag:'🇲🇽', name:'México', desc:'Operaciones transfronterizas en ambas direcciones.', animClass:'' },
+        { flag:'🌎', name:'Latinoamérica', desc:'Coordinación hacia mercados clave.', animClass:'gl-wiggle' },
+        { flag:'🤝', name:'Asesoría global', desc:'Cualquier origen o destino internacional.', animClass:'gl-wiggle' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
